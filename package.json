@@ -1,0 +1,45 @@
+{
+    "name": "@casekit/use-location-state",
+    "version": "0.0.1",
+    "description": "Provides a typed and validated way of interacting with location.state",
+    "main": "lib/index",
+    "types": "lib/index",
+    "exports": {
+        ".": "./lib/index.js"
+    },
+    "files": [
+        "./src/*",
+        "./lib/*"
+    ],
+    "scripts": {
+        "lint": "eslint --ignore-path .gitignore src",
+        "prettier": "prettier -c src",
+        "typecheck": "tsc --noEmit",
+        "release": "rm -rf lib && pnpm build && pnpm version patch && pnpm publish",
+        "build": "tsc",
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "@types/react": "^18.3.1",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "eslint": "^8.57.0",
+        "jsdom": "^24.0.0",
+        "prettier": "^3.2.5",
+        "react": "^18.3.1",
+        "react-router-dom": "^6.23.0",
+        "typescript": "^5.3.3",
+        "vitest": "^1.1.1",
+        "zod": "^3.23.8"
+    },
+    "author": "Russell Dunphy",
+    "license": "ISC",
+    "peerDependencies": {
+        "@types/react": "^18.3.1",
+        "react": "^18.3.1",
+        "react-router-dom": "^6.23.0",
+        "zod": "^3.23.8"
+    },
+    "dependencies": {
+        "@testing-library/react": "^15.0.7"
+    }
+}

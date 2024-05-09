@@ -1,0 +1,5 @@
+/lib
+/tmp
+/node_modules
+.DS_Store
+tsconfig.vitest-temp.json

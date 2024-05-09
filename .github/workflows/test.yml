@@ -1,0 +1,47 @@
+name: Test & lint
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+jobs:
+    test:
+        name: "🧪 Run unit tests"
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/ci-setup
+
+            - name: Run tests
+              run: pnpm test
+
+    typecheck:
+        name: "📐 Typecheck"
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/ci-setup
+            - name: Typecheck
+              run: pnpm typecheck
+
+    lint:
+        name: "🧹 Run eslint"
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/ci-setup
+            - name: Lint
+              run: pnpm lint
+
+    prettier:
+        name: "💅 Run prettier"
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/ci-setup
+            - name: Prettier
+              run: pnpm prettier
