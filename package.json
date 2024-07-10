@@ -1,6 +1,6 @@
 {
     "name": "@casekit/use-location-state",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Provides a typed and validated way of interacting with location.state",
     "main": "lib/index",
     "types": "lib/index",
