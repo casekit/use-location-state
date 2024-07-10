@@ -1,13 +1,10 @@
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 export const useLocationState = <Schema extends Record<string, z.ZodSchema>>(
-    ...[schema, defaultValues]: Record<string, never> extends z.infer<
-        z.ZodObject<Schema>
-    >
-        ? [schema: Schema, defaultValues?: z.infer<z.ZodObject<Schema>>]
-        : [schema: Schema, defaultValues: z.infer<z.ZodObject<Schema>>]
+    schema: Schema,
+    defaultValues: z.infer<z.ZodObject<Schema>>,
 ) => {
     // allow the schema and default values to be passed in
     // without being memoized
@@ -17,8 +14,16 @@ export const useLocationState = <Schema extends Record<string, z.ZodSchema>>(
     const location = useLocation();
     const navigate = useNavigate();
 
-    const value: z.infer<z.ZodObject<Schema>> = useMemo(
-        () =>
+    // initialize the state with the default values
+    // and then update them to match location.state
+    // in an effect. this means that the hook will
+    // always return default values on first render.
+    // this could be a bit of a gotcha, but it also
+    // lets us neatly avoid hydration mismatch errors
+    // so i think it's ok
+    const [value, setValue] = useState(defaultValues);
+    useEffect(() => {
+        setValue(
             z
                 .object(schemaRef.current)
                 .partial()
@@ -26,8 +31,8 @@ export const useLocationState = <Schema extends Record<string, z.ZodSchema>>(
                     ...defaultValuesRef.current,
                     ...location.state,
                 }),
-        [location.state],
-    );
+        );
+    }, [location.state]);
 
     const update = useCallback(
         (delta: Partial<z.infer<z.ZodObject<Schema>>>) => {

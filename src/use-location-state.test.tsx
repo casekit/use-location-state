@@ -5,13 +5,6 @@ import { z } from "zod";
 import { useLocationState } from "./use-location-state";
 
 describe("useLocationState", () => {
-    test("it works with an empty schema", () => {
-        const { result } = renderHook(() => useLocationState({}), {
-            wrapper: MemoryRouter,
-        });
-        expect(result.current.value).toEqual({});
-    });
-
     test("state can be fetched, updated, replaced, and cleared", () => {
         const { result } = renderHook(
             () =>
